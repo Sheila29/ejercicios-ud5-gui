@@ -1,3 +1,6 @@
+
+import java.util.List;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,6 +13,17 @@
  */
 public class VentanaMostrarTodos extends javax.swing.JFrame {
 
+    String texto = "";
+    
+    public void mostrarTodos(List<Alumno> alumnos){
+        
+        for(Alumno a: alumnos){
+            
+            texto += a+"\n";
+             jTextPane2.setText(texto);
+        }
+       
+    }
     /**
      * Creates new form VentanaMostrarTodos
      */
@@ -34,6 +48,8 @@ public class VentanaMostrarTodos extends javax.swing.JFrame {
 
         jLabel1.setText("Todos los alumnos:");
 
+        jTextPane2.setBackground(new java.awt.Color(0, 102, 102));
+        jTextPane2.setForeground(new java.awt.Color(204, 0, 204));
         jScrollPane2.setViewportView(jTextPane2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

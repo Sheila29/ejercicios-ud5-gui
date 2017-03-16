@@ -18,7 +18,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private List<Alumno> alumnos = new ArrayList<>();
 
+    private VentanaMostrarTodos lista = null;
 
+    
     /**
      * Creates new form VentanaPrincipal
      */
@@ -154,7 +156,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
        
         
-         if ( nombre.isEmpty() && apellidos.isEmpty() && telefono.isEmpty() && email.isEmpty()){
+         if ( !nombre.isEmpty() && !apellidos.isEmpty() && !telefono.isEmpty() && !email.isEmpty()){
        
             
             Alumno a = new Alumno();
@@ -164,13 +166,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             a.setTelefono(telefono);
             a.setEmail(email);
             
-            getAlumnos().add(a);
+            alumnos.add(a);
             
             
             jTextField1.setText("");
             jTextField2.setText("");
             jTextField3.setText("");
             jTextField4.setText("");
+            
+            
             
             JOptionPane.showMessageDialog(this, "OK");
             
@@ -189,10 +193,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // VER TODOS
         
-        VentanaMostrarTodos lista = new VentanaMostrarTodos();
-        lista.setVisible(true);
+
+        
+        if( lista == null){
+            lista = new VentanaMostrarTodos();
+            lista.setVisible(true);
         
         
+        }
+        
+        
+        lista.mostrarTodos(alumnos);
         
         
         
@@ -203,13 +214,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    public void listadoAlumnos(){
-        
-        
-      
-        
-        
-    }
+
+   
     
     
     /**
