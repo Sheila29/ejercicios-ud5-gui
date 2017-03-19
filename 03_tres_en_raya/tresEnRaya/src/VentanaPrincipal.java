@@ -1,5 +1,6 @@
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -12,114 +13,164 @@ import javax.swing.JButton;
  * @author 7FPROG10
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
-    
+ 
 
-    public int [][] tablero = {{0, 0, 0},
-                               {0, 0, 0},
-                               {0, 0, 0}};
-    
-     public void limpiarTablero(){
-        jButton1.setText("");
-        jButton2.setText("");
-        jButton3.setText("");
-        jButton4.setText("");
-        jButton5.setText("");
-        jButton6.setText("");
-        jButton7.setText("");
-        jButton8.setText("");
-        jButton9.setText("");
-        
-    }
-     
-     
-    
-     
-     private JButton[][] casillas = new JButton[3][3];
-  
-     public void visualizarTablero(JButton[][] casillas){
-         
-         for (int i = 0; i < tablero.length; i++) {
-             for (int j = 0; j < tablero.length; j++) {
-                       
-                 switch(tablero[0][0]){
-                  case 0:
-                   casillas[i][j].setText("");
-                   break;
-                  case 1:
-                   casillas[i][j].setText("O");
-                  break;
-                  case 3:
-                  casillas[i][j].setText("X");
-                   break;
-                 
-             }
-         
-     
-     }
-         }
-    
-     
-     }
-     
-     public static boolean hayGanador(JButton[][] casillas) {
-
-        // Primero un jugador y luego el otro
-        for (int i = 0; i < 2; i++) {
-
-            // Filas
-            if (casillas[0][0].equals(i) && casillas[0][1].equals(i) && casillas[0][2].equals(i)) {
-                return true;
-            }
-            if (casillas[1][0].equals(i) && casillas[1][1].equals(i) && casillas[1][2].equals(i)) {
-                return true;
-            }
-            if (casillas[2][0].equals(i) && casillas[2][1].equals(i)  && casillas[2][2].equals(i)) {
-                return true;
-            }
-
-            // Columnas
-            for (int j = 0; j < 3; j++ ) {
-                if (casillas[0][j].equals(i) && casillas[1][j].equals(i) && casillas[2][j].equals(i)) {
-                    return true;
-                }
-            }
-
-            // Diagonales
-            if (casillas[0][0].equals(i) && casillas[1][1].equals(i) && casillas[2][2].equals(i)) {
-                return true;
-            }
-            if (casillas[0][2].equals(i) && casillas[1][1].equals(i) && casillas[2][0].equals(i)) {
-                return true;
-            }
-        }
-
-        // No hay ganador
-        return false;
-    }
-
-     
-
-    
     /**
      * Creates new form VentanaPrincipal
      */
     public VentanaPrincipal() {
-       
+    
     initComponents();
-        
-        casillas[0][0] = jButton1;
-        casillas[0][1] = jButton2;
-        casillas[0][2] = jButton3;
-        casillas[1][0] = jButton4;
-        casillas[1][1] = jButton5;
-        casillas[1][2] = jButton6;
-        casillas[2][0] = jButton7;
-        casillas[2][1] = jButton8;
-        casillas[2][2] = jButton9;
-     
-        
+    
+    casillas[0][0] = jButton1;
+    casillas[0][1] = jButton2;
+    casillas[0][2] = jButton3;
+    casillas[1][0] = jButton4;
+    casillas[1][1] = jButton5;
+    casillas[1][2] = jButton6;
+    casillas[2][0] = jButton7;
+    casillas[2][1] = jButton8;
+    casillas[2][2] = jButton9;
+    
+    actualizarTablero();
+    
     }
 
+    private int[][] tablero = {
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        
+    };
+    
+    private JButton[][] casillas = new JButton[3][3];
+    
+    
+    public void actualizarTablero(){
+    
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                switch(tablero[i][j]){
+                    case 0:
+                        casillas[i][j].setText("");
+                        break;
+                    case 1:
+                        casillas[i][j].setText("O");
+                        break;
+                    case 2:
+                        casillas[i][j].setText("X");
+                        break;
+                        
+                        
+                }
+                
+            }
+            
+        }
+      
+       
+    
+    }
+    
+    private int turno = 0;
+    
+    private boolean hayGanador = false;
+    
+    
+    public void comprobarGanador(int fila, int columna){
+        
+        if (tablero[fila][columna] == 0){
+            // Casilla libre
+            
+            if( turno % 2 == 0){
+            tablero[fila][columna] = 1; // O
+            }else{
+            tablero[fila][columna] = 2; // X
+            }
+            
+           
+            int jugador = tablero[fila][columna]; // guardamos en variable 1 o 2
+            
+            for (int i = 0; i < 3; i++) {
+                    if (tablero[i][0] == jugador && tablero[i][1] == jugador && tablero[i][2] == jugador){
+                     mostrarMessage(jugador); 
+                     hayGanador = true;
+                     limpiarTablero();
+                    }
+            }
+            
+             for (int i = 0; i < 3; i++) {
+                    if (tablero[0][i] == jugador && tablero[1][i] == jugador && tablero[2][i] == jugador){
+                     mostrarMessage(jugador);
+                     hayGanador = true;
+                 
+                }
+            }
+            
+             
+            if (tablero[0][0] == jugador && tablero[1][1] == jugador && tablero[2][2] == jugador){
+                mostrarMessage(jugador);
+                hayGanador = true;
+               
+            }
+            if (tablero[0][2] == jugador && tablero[1][1] == jugador && tablero[2][0] == jugador){
+                mostrarMessage(jugador);
+                hayGanador = true;
+          
+            }
+            
+            turno += 1;
+            
+            if(hayGanador = false &&  turno == 8){
+                mostrarMessage(3);
+                limpiarTablero();
+            }
+            
+       
+        
+            if(hayGanador){
+            limpiarTablero();
+            }
+            
+            
+            actualizarTablero();
+         
+            
+       
+         
+        }
+        
+        
+        }
+    
+    private void mostrarMessage(int ganador){
+    switch(ganador){
+        case 1:
+            JOptionPane.showMessageDialog(this, "El ganador es el O", "TRES EN RAYA", JOptionPane.INFORMATION_MESSAGE);
+            break;
+        case 2:
+            JOptionPane.showMessageDialog(this, "El ganador es el X", "TRES EN RAYA", JOptionPane.INFORMATION_MESSAGE);
+            break;
+        case 3:
+            JOptionPane.showMessageDialog(this, "Empate", "TRES EN RAYA", JOptionPane.WARNING_MESSAGE);
+            break;
+            
+    
+    }
+    }
+              
+    public void limpiarTablero(){
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+               tablero[i][j] = 0;
+                
+            }
+            
+        }
+        
+        turno = 0;
+        hayGanador = false;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -141,6 +192,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jButton9 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jButton1.setText("-");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -150,20 +202,60 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
 
         jButton2.setText("-");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("-");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("-");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("-");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("-");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton7.setText("-");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jButton8.setText("-");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jButton9.setText("-");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -172,19 +264,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE))
+                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE))
+                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -192,19 +284,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
                     .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -212,9 +304,42 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        comprobarGanador(0, 0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        comprobarGanador(0, 1);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        comprobarGanador(0, 2);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        comprobarGanador(1, 0);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+       comprobarGanador(1, 1);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        comprobarGanador(1, 2);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+       comprobarGanador(2, 0);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+       comprobarGanador(2, 1);
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        comprobarGanador(2, 2);
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    
     /**
      * @param args the command line arguments
      */
