@@ -15,8 +15,7 @@ import java.util.List;
 public class VentanaNuevoContacto extends javax.swing.JFrame {
     
     private VentanaPrincipal vp = null;
-    
-    private List<Contacto> contactos = new ArrayList<>();
+   
     
     /**
      * Creates new form NuevoContacto
@@ -120,40 +119,32 @@ public class VentanaNuevoContacto extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // Cancelar
         this.setVisible(false);
+        
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        
+        jTextField1.requestFocus();
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
       // Guardar
+   
         String nombre = jTextField1.getText();
         String telefono = jTextField2.getText();        
         String email = jTextField3.getText();
      
+        Contacto c = new Contacto(nombre,telefono,email);
         
-         if ( !nombre.isEmpty() && !telefono.isEmpty() && !email.isEmpty()){
-       
-            
-            Contacto c = new Contacto();
-            
-            c.setNombre(nombre);
-            c.setTelefono(telefono);
-            c.setEmail(email);
-           
-            
-            contactos.add(c);
-            
-            
-            jTextField1.setText("");
-            jTextField2.setText("");
-            jTextField3.setText("");
+        vp.getGestorcontacto().nuevoContacto(c);
+        
           
-            jTextField1.requestFocus();
             
             
    
             
-         } 
-            
-       
+         
          
          
  

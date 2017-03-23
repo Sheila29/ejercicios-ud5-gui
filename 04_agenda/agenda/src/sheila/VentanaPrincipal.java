@@ -12,12 +12,19 @@ package sheila;
 public class VentanaPrincipal extends javax.swing.JFrame {
 
     private VentanaNuevoContacto nuevoContacto = null; 
+    
+    private VentanaContacto contacto = null;
+    
+    private GestorContacto gestorcontacto = null;
     /**
      * Creates new form VentanaPrincipal
      */
     public VentanaPrincipal() {
         initComponents();
         
+       gestorcontacto = new GestorContacto();
+       gestorcontacto.setVp(this);
+       
        
     }
 
@@ -43,23 +50,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(153, 0, 153));
         jLabel1.setText("AGENDA");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/añadir contacto.jpg"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/AñadirContacto.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/lista.jpg"))); // NOI18N
-        jButton2.setText("CONTACTOS");
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/ListadoContactos.png"))); // NOI18N
+        jButton2.setActionCommand("");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sheila/buscar.jpg"))); // NOI18N
-        jButton3.setText("BUSCAR");
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/BuscarContactos.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -69,27 +75,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(271, 271, 271)
+                        .addGap(87, 87, 87)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -109,7 +114,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+     // Ventana contacto
+     
+     if ( contacto == null){
+         contacto = new VentanaContacto();
+         
+         contacto.setVp(this);
+     }
+     
+     contacto.setVisible(true);
+     
+     
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -153,4 +168,32 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the nuevoContacto
+     */
+    public VentanaNuevoContacto getNuevoContacto() {
+        return nuevoContacto;
+    }
+
+    /**
+     * @param nuevoContacto the nuevoContacto to set
+     */
+    public void setNuevoContacto(VentanaNuevoContacto nuevoContacto) {
+        this.nuevoContacto = nuevoContacto;
+    }
+
+    /**
+     * @return the gestorcontacto
+     */
+    public GestorContacto getGestorcontacto() {
+        return gestorcontacto;
+    }
+
+    /**
+     * @param gestorcontacto the gestorcontacto to set
+     */
+    public void setGestorcontacto(GestorContacto gestorcontacto) {
+        this.gestorcontacto = gestorcontacto;
+    }
 }
